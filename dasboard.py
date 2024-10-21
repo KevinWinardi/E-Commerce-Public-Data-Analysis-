@@ -60,3 +60,19 @@ st.header(
     Location with the most customers
     """
 )
+customer = pd.read_csv('E-Commerce Public Dataset/customers_dataset.csv')
+geolocation = pd.read_csv('E-Commerce Public Dataset/geolocation_dataset.csv')
+
+customers_location = customer.merge(geolocation, left_on='customer_zip_code_prefix', right_on='geolocation_zip_code_prefix', how='inner')
+
+peta = mpimg.imread('map.jpeg')
+
+ax = customers_location.plot(kind="scatter", x="geolocation_lng", y="geolocation_lat", figsize=(10, 10), alpha=0.3, s=0.3, c='green')
+
+plt.axis('off')
+
+plt.imshow(peta, extent=[-73.98283055, -33.8, -33.75116944, 5.4], zorder=0)
+
+plt.title('Location with the most customer')
+
+st.pyplot(plt)
